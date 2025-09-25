@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - The Lifelist</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="logo">The Lifelist</h1>
+        <form id="signup-form" class="auth-form">
+            <input type="text" id="username" placeholder="username" required>
+            <input type="text" id="dob" placeholder="DOB" onfocus="(this.type='date')" onblur="(this.type='text')">
+            <input type="email" id="email" placeholder="Mail ID" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="password" id="retype-password" placeholder="retype Password" required>
+            <button type="submit" class="btn">sign up</button>
+        </form>
+         <p style="margin-top: 1rem;">Already have an account? <a href="signin.html">Sign In</a></p>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>
