@@ -1,126 +1,267 @@
-/* ---- Import Fonts from Google ---- */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Caveat&family=Lato&display=swap');
-
-/* ---- General Styling & Body ---- */
-* {
-    box-sizing: border-box;
+/* Global Reset & Body Styling (Paper Texture) */
+body {
     margin: 0;
-    padding: 0;
+    font-family: 'Cabin', sans-serif; /* Default body font */
+    color: #333;
+    background-color: #f8f6f2; /* Light paper-like background */
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); /* Subtle paper texture */
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-body {
-    font-family: 'Lato', sans-serif;
-    background-color: #F4F1EB; /* Fallback color */
-    background-image: url('https://www.transparenttextures.com/patterns/crumpled-paper.png'); /* Aesthetic texture */
+/* Specific body for landing page */
+body.landing-body {
+    justify-content: center;
+    align-items: center;
+}
+
+
+.logo-img-main {
+    max-width: 300px; /* Adjust size for the main landing page */
+    margin-bottom: 2rem;
+}
+
+.logo-img {
+    max-height: 50px; /* Adjust height for headers and modals */
+    width: auto;
+}
+
+/* Common Logo Styles */
+.logo-main {
+    font-family: 'Quattrocento Sans', sans-serif; /* Elegant logo font */
+    font-size: 4rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+}
+
+.logo-modal {
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+}
+
+header .logo { /* Smaller logo for header */
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 25px; /* More rounded as per design */
+    font-size: 1.1rem;
+    font-family: 'Caveat', cursive; /* Handwritten font for buttons */
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background-color: #555; /* Darker gray for primary */
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+}
+
+.btn-secondary {
+    background-color: #d1d1d1; /* Lighter gray for secondary */
+    color: #333;
+    border: 1px solid #c0c0c0;
+}
+
+.btn-secondary:hover {
+    background-color: #c0c0c0;
+}
+
+.btn-dark { /* Specific for login/signup modals */
+    background-color: #555;
+    color: #fff;
+    width: 100%;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-dark:hover {
+    background-color: #333;
+}
+
+/* Landing Page Specific Styles (Image 5) */
+.landing-buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Modal Styling */
+.modal {
+    position: fixed;
+    z-index: 1000; /* Higher z-index to ensure it's on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Slightly lighter overlay */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    color: #4A4A4A;
 }
 
-/* ---- Main Container ---- */
-.container {
+.modal-content {
+    background-color: #fdfdfd; /* Off-white for modal background */
+    padding: 3rem 2.5rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 450px; /* Slightly wider modals */
     text-align: center;
-    padding: 2rem;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    border: 1px solid #eee;
 }
 
-/* ---- Logo Styling ---- */
-.logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    color: #333;
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem; /* Larger close button */
+    color: #aaa;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
 }
 
-/* ---- Authentication Forms & Buttons ---- */
-.auth-form {
+.close-btn:hover {
+    color: #666;
+}
+
+/* Form Styling (Images 3, 4) */
+form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    width: 300px;
-    margin: 0 auto;
 }
 
-.auth-form input {
-    padding: 0.8rem 1rem;
-    border: 1px solid #CFCFCF;
-    border-radius: 25px;
-    background-color: #EAEAEA;
-    font-family: 'Lato', sans-serif;
+form input {
+    padding: 14px 20px; /* More padding for inputs */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px; /* Rounded inputs */
     font-size: 1rem;
-    text-align: center;
+    font-family: 'Cabin', sans-serif;
+    background-color: #fefefe;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+form input::placeholder {
+    color: #999;
+    font-family: 'Caveat', cursive; /* Handwritten placeholder */
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+/* Utility Class */
+.hidden {
+    display: none;
+}
+
+/* Navigation Arrows (used on dashboard/profile) */
+.nav-arrow {
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 2rem;
     color: #555;
-}
-
-.auth-form input:focus {
-    outline: none;
-    border-color: #888;
-}
-
-.btn {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 25px;
-    background-color: #8D8D8D;
-    color: white;
-    font-size: 1rem;
     cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
+    user-select: none;
+    transition: color 0.2s ease;
 }
 
-.btn:hover {
-    background-color: #707070;
+.nav-arrow:hover {
+    color: #000;
 }
 
-.btn-group {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+/* --- Sidenav Menu & Overlay Styles --- */
+
+/* The Sidenav Menu (Hidden by default) */
+.sidenav {
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    z-index: 1001; /* Sits on top of the overlay */
+    top: 0;
+    left: 0;
+    background-color: #fefdfb; /* Matches your theme */
+    box-shadow: 3px 0px 15px rgba(0,0,0,0.1);
+    overflow-x: hidden;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%); /* Hides the menu off-screen to the left */
+    padding-top: 60px;
 }
 
-/* ---- Lifelist Page Styling ---- */
-.lifelist-container {
-    background-color: rgba(255, 255, 255, 0.5);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    max-width: 600px;
-    width: 100%;
+/* The class that gets added by JavaScript to show the menu */
+.sidenav.open {
+    transform: translateX(0);
 }
 
-.lifelist-items {
+/* Sidenav Menu Links */
+.sidenav ul {
     list-style: none;
     padding: 0;
-    text-align: left;
+    margin: 0;
 }
 
-.lifelist-item {
+.sidenav a {
+    padding: 15px 20px;
+    text-decoration: none;
     font-family: 'Caveat', cursive;
     font-size: 1.8rem;
     color: #333;
-    padding: 0.5rem 0;
+    display: block;
+    transition: background-color 0.2s;
+}
+
+.sidenav a:hover {
+    background-color: #f0e9e1; /* A subtle hover effect */
+}
+
+#logout-link a {
+    color: #c94c4c; /* A different color for the logout option */
+}
+
+/* The dark overlay behind the menu */
+.overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden; /* Use visibility and opacity for smooth transitions */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+/* The class that gets added by JavaScript to show the overlay */
+.overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure the logo in the header is clickable */
+.logo-link {
     display: flex;
     align-items: center;
-    border-bottom: 1px dashed #D3D3D3;
-}
-
-.lifelist-item:last-child {
-    border-bottom: none;
-}
-
-.lifelist-item input[type="checkbox"] {
-    margin-right: 1rem;
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-/* Style for checked items */
-.lifelist-item input[type="checkbox"]:checked + label {
-    text-decoration: line-through;
-    color: #999;
 }

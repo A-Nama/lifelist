@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lifelist</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="dashboard.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Cabin:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+    <div class="hamburger-menu" id="menu-toggle">☰</div>
+    <a href="dashboard.html" class="logo-link">
+        <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img">
+    </a>
+    <div class="header-right">
+        <div class="profile-pic-thumb" id="header-profile-pic" onclick="window.location.href='profile.html'"></div>
+    </div>
+</header>
+
+<nav class="sidenav" id="sidenav-menu">
+    <ul>
+        <li><a href="dashboard.html">Home</a></li>
+        <li><a href="my-lifelist.html">My Lifelist</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="profile.html">Edit Profile</a></li>
+        <li id="logout-link"><a href="#">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="overlay" id="overlay"></div>
+
+    <main class="dashboard-container">
+        <div class="dashboard-content">
+
+            <section class="my-lifelist-card" onclick="window.location.href='my-lifelist.html'">
+                <div class="my-lifelist-image" id="my-lifelist-card-image"></div>
+                <h2 class="my-lifelist-title">My Lifelist</h2>
+            </section>
+
+            <div class="right-column">
+                <section class="section-card theme-section">
+                    <h2 class="section-title">Our Lifelist</h2>
+                    <div class="horizontal-scroll-container" id="theme-list">
+                        <div class="scroll-arrow left-arrow">&#8592;</div>
+                        <div class="scroll-content">
+                            </div>
+                        <div class="scroll-arrow right-arrow">&#8594;</div>
+                    </div>
+                </section>
+
+                <section class="section-card user-lifelist-section">
+                    <h2 class="section-title">Lifelists</h2>
+                    <div class="horizontal-scroll-container" id="user-list">
+                        <div class="scroll-arrow left-arrow">&#8592;</div>
+                        <div class="scroll-content">
+                            </div>
+                        <div class="scroll-arrow right-arrow">&#8594;</div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+    <script src="nav.js"></script> 
+    <script src="dashboard.js"></script>
+</body>
+</html>

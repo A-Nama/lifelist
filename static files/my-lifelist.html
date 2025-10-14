@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Lifelist</title>
+    <link rel="stylesheet" href="style.css"> <link rel="stylesheet" href="my-lifelist.css"> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Cabin:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+    <div class="hamburger-menu" id="menu-toggle">☰</div>
+    <a href="dashboard.html" class="logo-link">
+        <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img">
+    </a>
+    <div class="header-right">
+        <div class="profile-pic-thumb" id="header-profile-pic" onclick="window.location.href='profile.html'"></div>
+    </div>
+</header>
+
+<nav class="sidenav" id="sidenav-menu">
+    <ul>
+        <li><a href="dashboard.html">Home</a></li>
+        <li><a href="my-lifelist.html">My Lifelist</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="profile.html">Edit Profile</a></li>
+        <li id="logout-link"><a href="#">Logout</a></li>
+    </ul>
+</nav>
+
+<div class="overlay" id="overlay"></div>
+
+    <main class="lifelist-container">
+        <div class="profile-sidebar">
+            <h2 class="username-title" id="username-title">USERNAME</h2>
+            <div class="profile-image-large" id="profile-image"></div>
+            <h3 class="profile-name" id="profile-name">YourName</h3>
+            <button class="btn btn-secondary small-btn" onclick="window.location.href='profile.html'">Edit Profile</button>
+        </div>
+
+        <div class="goals-main">
+            <div id="personal-goal-list" class="personal-goal-list">
+                </div>
+            <div class="my-lifelist-actions">
+                <div class="input-wrapper">
+                    <input type="text" id="new-goal-text" placeholder="Type Lifelist">
+                    <span class="edit-icon">✎</span>
+                </div>
+                <button class="btn btn-dark small-btn" id="add-goal-btn">Add</button>
+                <button class="btn btn-secondary small-btn" id="edit-goal-btn">Edit</button>
+                <button class="btn btn-secondary small-btn" id="remove-goal-btn">Remove</button>
+            </div>
+            <div class="share-story-wrapper">
+                <button class="btn btn-dark share-story-btn" id="share-story-open-modal">Share Your Story</button>
+                <span class="edit-icon">✎</span>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal hidden" id="share-journey-modal">
+        <div class="modal-content share-journey-content">
+            <span class="close-btn">&times;</span>
+            <div class="share-journey-header">
+                <div class="nav-arrow" id="share-modal-back-btn">&#8592;</div>
+                <h2 class="handwritten-text">Share Your Journey</h2>
+                <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img">
+            </div>
+            <div class="share-journey-body">
+                <div class="profile-pic-small" id="share-modal-profile-pic"></div>
+                <textarea class="story-textarea" placeholder="share your story here"></textarea>
+                <div class="story-image-upload">
+                    <input type="text" placeholder="Add Title" class="story-title-input">
+                    <label for="story-image-input" class="camera-placeholder">
+                        <span class="camera-icon-large">📷</span>
+                        <span class="add-icon">+</span>
+                        <input type="file" id="story-image-input" accept="image/*" class="hidden-file-input">
+                    </label>
+                    <div id="story-image-preview" class="story-image-preview hidden"></div>
+                </div>
+            </div>
+            <button class="btn btn-dark share-post-btn" id="share-post-btn">Share Post</button>
+        </div>
+    </div>
+    <script src="nav.js"></script> 
+    <script src="my-lifelist.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+/* ADD THIS to the end of my-lifelist.css */
+
+body.read-only .my-lifelist-actions,
+body.read-only .share-story-wrapper,
+body.read-only .profile-sidebar .small-btn {
+    display: none;
+}
