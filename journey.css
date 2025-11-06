@@ -1,0 +1,102 @@
+.journey-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    font-family: 'Caveat', cursive;
+    text-align: center;
+}
+
+.journey-container h2 {
+    font-size: 2.5rem;
+    color: #444;
+}
+
+.journey-editor {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+#story-input {
+    flex-grow: 1;
+    min-height: 400px;
+    padding: 1.5rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    border: none;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    resize: none;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.journey-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 280px;
+}
+
+#title-input {
+    width: 100%;
+    padding: 1rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    box-sizing: border-box; /* Important for padding */
+}
+
+.image-uploader {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.camera-icon {
+    font-size: 5rem;
+    color: #aaa;
+}
+
+#image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#image-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#image-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hidden {
+    display: none;
+}
+
+.save-arrow {
+    font-size: 3rem;
+    text-decoration: none;
+    color: #555;
+    text-align: right;
+    margin-top: 1rem;
+}

@@ -38,3 +38,48 @@ header { display: flex; justify-content: space-between; align-items: center; pad
 #logout-link a { color: #c94c4c; }
 .overlay { height: 100%; width: 100%; position: fixed; z-index: 1000; top: 0; left: 0; background-color: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
 .overlay.visible { opacity: 1; visibility: visible; }
+
+/* Add to style.css */
+
+/* --- Sidenav Submenu Styles --- */
+.sidenav li.has-submenu > a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow {
+    font-size: 1rem;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Rotate arrow when the menu is open */
+.sidenav li.submenu-open > a .arrow {
+    transform: rotate(180deg);
+}
+
+.submenu {
+    list-style: none;
+    padding-left: 20px; /* Indent submenu items */
+    max-height: 0; /* Initially hidden */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+/* This class will be toggled by JS to show the menu */
+.submenu.open {
+    max-height: 500px; /* Animate to a height large enough for all items */
+}
+
+.submenu a {
+    font-size: 1.5rem; /* Slightly smaller font for submenu */
+    color: #555;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Style for the selected/active theme link */
+.submenu a.active {
+    font-weight: bold;
+    color: #333;
+}

@@ -11,6 +11,40 @@ document.addEventListener('DOMContentLoaded', async () => {
     const newGoalTextInput = document.getElementById('new-goal-text');
     const usernameTitle = document.getElementById('username-title');
     const profileName = document.getElementById('profile-name');
+    const themeMenuToggle = document.getElementById('theme-menu-toggle');
+    const themeSubmenu = document.getElementById('theme-submenu');
+    const themeList = document.getElementById('theme-submenu');
+    const newGoalThemeSelect = document.getElementById('new-goal-theme');
+
+    if (themeMenuToggle) {
+        themeMenuToggle.addEventListener('click', (e) => {
+            // Prevent the main link from navigating
+            e.preventDefault(); 
+            // Stop the click from propagating to other elements
+            e.stopPropagation(); 
+
+            // Toggle the class on the parent li to rotate the arrow
+            themeMenuToggle.classList.toggle('submenu-open');
+            // Toggle the class on the submenu ul to trigger the animation
+            themeSubmenu.classList.toggle('open');
+        });
+    }
+
+    themeList.addEventListener('click', (e) => {
+    e.preventDefault(); 
+
+        if (e.target.matches('a.theme-link')) {
+            const selectedTheme = e.target.dataset.theme;
+
+            document.querySelectorAll('.theme-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            e.target.classList.add('active');
+
+            renderPersonalGoals(selectedTheme);
+        }
+    });
+
 
     async function initializePage() {
         const token = localStorage.getItem('idToken');
@@ -33,12 +67,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    function renderPersonalGoals() {
+
+   function renderPersonalGoals(filterTheme = 'all') {
         personalGoalList.innerHTML = '';
-        if (goals.length > 0) {
-           goals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        const filteredGoals = goals.filter(goal => {
+            if (filterTheme === 'all') {
+                return true; // Show all goals
+            }
+            // This now correctly checks the 'theme' property of the goal object
+            return goal.theme === filterTheme;
+        });
+
+        if (filteredGoals.length > 0) {
+            filteredGoals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         }
-        goals.forEach(goal => {
+        filteredGoals.forEach(goal => {
             const goalItem = document.createElement('div');
             goalItem.className = `goal-item ${goal.completed ? 'completed' : ''}`;
             goalItem.innerHTML = `<input type="checkbox" data-goal-id="${goal.goalId}" ${goal.completed ? 'checked' : ''}><span>${goal.title}</span>`;
@@ -61,22 +105,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    async function createNewGoal() {
+     async function createNewGoal() {
         const title = newGoalTextInput.value.trim();
-        if (!title) return;
+        const theme = newGoalThemeSelect.value; // <-- Get selected theme
+
+        if (!title || !theme) { // <-- Add validation for theme
+            alert('Please write your goal and select a theme.');
+            return;
+        }
         const token = localStorage.getItem('idToken');
         try {
             const response = await fetch(`${API_URL}/goals`, {
                 method: 'POST',
                 headers: { 'Authorization': token, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: title, description: "" })
+                // --- THIS IS THE KEY CHANGE ---
+                // Add the 'theme' to the request body
+                body: JSON.stringify({ title: title, theme: theme, description: "" }) 
             });
             if (!response.ok) throw new Error('Could not create goal.');
             
             const newGoal = await response.json();
-            goals.push(newGoal); // Add the new goal returned from the API
-            renderPersonalGoals();
+            goals.push(newGoal);
+            renderPersonalGoals(); // Re-render the full list
             newGoalTextInput.value = '';
+            newGoalThemeSelect.value = ''; // Reset the dropdown
         } catch (error) {
             console.error('Failed to create goal:', error);
             alert('Could not save your goal. Please try again.');
@@ -85,6 +137,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- EVENT LISTENERS ---
     addGoalBtn.addEventListener('click', createNewGoal);
+
+    themeSubmenu.addEventListener('click', (e) => {
+        e.preventDefault(); 
+
+        if (e.target.matches('a.theme-link')) {
+            const selectedTheme = e.target.dataset.theme;
+
+            document.querySelectorAll('.theme-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            e.target.classList.add('active');
+
+            renderPersonalGoals(selectedTheme);
+        }
+    });
 
     // Initial page load
     initializePage();
