@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Lifelist</title>
+    
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Cabin:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1_700&family=Cabin:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body class="landing-body">
-
     <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img-main">
-    
     <div class="landing-buttons">
         <button class="btn btn-primary" id="signup-btn">sign up</button>
         <button class="btn btn-secondary" id="login-btn">sign in</button>
@@ -23,8 +22,8 @@
             <span class="close-btn" data-target="login-modal">&times;</span>
             <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img">
             <form id="login-form">
-                <input type="text" placeholder="username" required>
-                <input type="password" placeholder="Password" required>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
                 <button type="submit" class="btn btn-dark">sign in</button>
             </form>
         </div>
@@ -35,16 +34,27 @@
             <span class="close-btn" data-target="signup-modal">&times;</span>
             <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img">
             <form id="signup-form">
-                <input type="text" placeholder="username" required>
-                <input type="date" placeholder="DOB" required>
-                <input type="email" placeholder="Mail ID" required>
-                <input type="password" placeholder="Password" required>
-                <input type="password" placeholder="Enter Again" required>
+                <input type="email" placeholder="Email" >
+                <input type="password" placeholder="Password" >
+                <input type="password" placeholder="Confirm Password" >
                 <button type="submit" class="btn btn-dark">sign up</button>
             </form>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="modal hidden" id="verification-modal">
+        <div class="modal-content">
+            <span class="close-btn" data-target="verification-modal">&times;</span>
+            <img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img">
+            <h3>Check your email!</h3>
+            <p>We've sent a verification code to your email address.</p>
+            <form id="verification-form">
+                <input type="text" placeholder="Verification Code">
+                <button type="submit" class="btn btn-dark">Verify Account</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="demoscript.js"></script>
 </body>
 </html>

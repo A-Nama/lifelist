@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API Test Page</title>
+</head>
+<body>
+    <h1>Lifelist API Test</h1>
+    <p>Open the developer console (F12) to see the results.</p>
+    <button id="test-button">Create Goal</button>
+
+    <script>
+        document.getElementById('test-button').addEventListener('click', async () => {
+            // --- STEP 1: PASTE YOUR ID TOKEN HERE ---
+            // Get this from your real app after logging in (F12 > Application > Local Storage)
+            const idToken = "eyJraWQiOiJhRnlUYmNlUWg0dk9TQTJhXC9wZ3BpXC85TVA5STlweURLTVNJRWxsYklmU1E9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxMDdjYzljYy03MDcxLTcwZTMtNzU4Mi0yNmYzYWNhNmI2MzIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LW5vcnRoLTEuYW1hem9uYXdzLmNvbVwvZXUtbm9ydGgtMV9rTlhMTnZzZTIiLCJjb2duaXRvOnVzZXJuYW1lIjoiMTA3Y2M5Y2MtNzA3MS03MGUzLTc1ODItMjZmM2FjYTZiNjMyIiwib3JpZ2luX2p0aSI6IjFjMTk3NTAxLWE2YjktNGYxNC05OGRhLTAwZDgyYWViNTdjYSIsImF1ZCI6IjdwMGk4aGU3b2cwYnRpbjRkcTdoanQ2Z2RnIiwiZXZlbnRfaWQiOiJkM2RjMTcxZC04MGY1LTQyN2MtYjNkZC03NTBhMWUzNjA5NWMiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc2MDY0Mjg3MSwiZXhwIjoxNzYwNjQ2NDcxLCJpYXQiOjE3NjA2NDI4NzEsImp0aSI6ImY5Y2NjZWY4LWE5YjEtNGIwYS1iNzE1LWI3MjYxNDk5N2RlMyIsImVtYWlsIjoiY2F0aGVyaW5lcnVlNzc3QGdtYWlsLmNvbSJ9.FuXppzPvzbOQcSw-TmSiyFr2JdaqsXz-IbIFPcW9M-gxnqHMOjdge6NnM2W00_7qxDVlFOSQnjsj5tGK2TYaIHWRDOY7t75IVsDalnyEGTYfOmRIDPFVI-McK8NoB64PlLOxmL_f2MjfGenUNQDdTAxL1QPiG7lhfuYaxLxD1I6MjtyQLDRHDX3JrP_D5SLlhu8Eq8BHr7rma8JbiP2U0sxNsc1DZVQJkWmKQP46IudiSyBA5_fPzLdZ2PpbMK4TPBsPdLShs0jms2f1GYxjFefi1GYnooAjAU8lodShsT-roozy9eTZWir0-qPz1oWiw1AruUjd0tcRk_h0vvFmHg";
+
+            if (idToken === "eyJraWQiOiJhRnlUYmNlUWg0dk9TQTJhXC9wZ3BpXC85TVA5STlweURLTVNJRWxsYklmU1E9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxMDdjYzljYy03MDcxLTcwZTMtNzU4Mi0yNmYzYWNhNmI2MzIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LW5vcnRoLTEuYW1hem9uYXdzLmNvbVwvZXUtbm9ydGgtMV9rTlhMTnZzZTIiLCJjb2duaXRvOnVzZXJuYW1lIjoiMTA3Y2M5Y2MtNzA3MS03MGUzLTc1ODItMjZmM2FjYTZiNjMyIiwib3JpZ2luX2p0aSI6IjFjMTk3NTAxLWE2YjktNGYxNC05OGRhLTAwZDgyYWViNTdjYSIsImF1ZCI6IjdwMGk4aGU3b2cwYnRpbjRkcTdoanQ2Z2RnIiwiZXZlbnRfaWQiOiJkM2RjMTcxZC04MGY1LTQyN2MtYjNkZC03NTBhMWUzNjA5NWMiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc2MDY0Mjg3MSwiZXhwIjoxNzYwNjQ2NDcxLCJpYXQiOjE3NjA2NDI4NzEsImp0aSI6ImY5Y2NjZWY4LWE5YjEtNGIwYS1iNzE1LWI3MjYxNDk5N2RlMyIsImVtYWlsIjoiY2F0aGVyaW5lcnVlNzc3QGdtYWlsLmNvbSJ9.FuXppzPvzbOQcSw-TmSiyFr2JdaqsXz-IbIFPcW9M-gxnqHMOjdge6NnM2W00_7qxDVlFOSQnjsj5tGK2TYaIHWRDOY7t75IVsDalnyEGTYfOmRIDPFVI-McK8NoB64PlLOxmL_f2MjfGenUNQDdTAxL1QPiG7lhfuYaxLxD1I6MjtyQLDRHDX3JrP_D5SLlhu8Eq8BHr7rma8JbiP2U0sxNsc1DZVQJkWmKQP46IudiSyBA5_fPzLdZ2PpbMK4TPBsPdLShs0jms2f1GYxjFefi1GYnooAjAU8lodShsT-roozy9eTZWir0-qPz1oWiw1AruUjd0tcRk_h0vvFmHg") {
+                alert("Please paste your real idToken into the script before testing!");
+                return;
+            }
+
+            // --- API and Goal Data ---
+            const apiUrl = 'https://x9a2avtgph.execute-api.eu-north-1.amazonaws.com/prod/goals';
+            const newGoalData = {
+                title: "Test from Dummy Frontend",
+                theme: "academics",
+                description: "This goal was created by test.html"
+            };
+
+            console.log("Attempting to create goal...");
+            console.log("URL:", apiUrl);
+            console.log("Sending Token:", idToken);
+            console.log("Sending Body:", JSON.stringify(newGoalData));
+
+            // --- The Fetch Request ---
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': idToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newGoalData)
+                });
+
+                console.log("Response received:", response);
+
+                const responseData = await response.json();
+                
+                if (!response.ok) {
+                    // If the response is not successful, log the error body
+                    console.error("API returned an error!", responseData);
+                    alert(`Error: ${responseData.message || 'Unknown error'}`);
+                } else {
+                    // If successful, log the new goal
+                    console.log("SUCCESS! Goal created:", responseData);
+                    alert("Success! Check the console and your DynamoDB table.");
+                }
+
+            } catch (error) {
+                console.error("Fetch failed! This is likely a CORS or network issue.", error);
+                alert("Fetch failed! Check the console for a CORS or network error.");
+            }
+        });
+    </script>
+</body>
+</html>

@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Lifelist</title>
     
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1093.0.min.js"></script>
-    
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="my-lifelist.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,13 +14,24 @@
 <body>
     <header>
         <div class="hamburger-menu" id="menu-toggle">☰</div>
-        <a href="dashboard.html" class="logo-link"><img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img"></a>
+        <a href="demo.html" class="logo-link"><img src="lifelistlogo.png" alt="The Lifelist Logo" class="logo-img"></a>
         <div class="header-right"><div class="profile-pic-thumb" id="header-profile-pic"></div></div>
     </header>
+
     <nav class="sidenav" id="sidenav-menu">
         <ul>
-            <li><a href="my-lifelist.html">My Lifelist</a></li>
-            <li id="logout-link"><a href="#">Logout</a></li>
+            <li><a href="demo.html">My Lifelist</a></li>
+            <li class="has-submenu" id="theme-menu-toggle">
+                <a href="#">Themes <span class="arrow">▾</span></a>
+                <ul class="submenu" id="theme-submenu">
+                    <li><a href="#" class="theme-link active" data-theme="all">All Goals</a></li>
+                    <li><a href="#" class="theme-link" data-theme="travel">✈️ Travel</a></li>
+                    <li><a href="#" class="theme-link" data-theme="movies">🎬 Movies</a></li>
+                    <li><a href="#" class="theme-link" data-theme="academics">🎓 Academics</a></li>
+                    <li><a href="#" class="theme-link" data-theme="relationships">❤️ Relationships</a></li>
+                </ul>
+            </li>
+            <li id="logout-link"><a href="index.html">Logout</a></li>
         </ul>
     </nav>
     <div class="overlay" id="overlay"></div>
@@ -35,17 +44,22 @@
         </div>
         <div class="goals-main">
             <div id="personal-goal-list" class="personal-goal-list"></div>
+            
             <div class="my-lifelist-actions">
-                <div class="input-wrapper">
-                    <input type="text" id="new-goal-text" placeholder="Type Lifelist">
-                    <span class="edit-icon">✎</span>
-                </div>
+                <input type="text" id="new-goal-text" placeholder="Type Lifelist">
+                <select id="new-goal-theme" class="theme-select">
+                    <option value="">Select Theme</option>
+                    <option value="travel">✈️ Travel</option>
+                    <option value="movies">🎬 Movies</option>
+                    <option value="academics">🎓 Academics</option>
+                    <option value="relationships">❤️ Relationships</option>
+                </select>
                 <button class="btn btn-dark small-btn" id="add-goal-btn">Add</button>
             </div>
         </div>
     </main>
 
     <script src="nav.js"></script>
-    <script src="my-lifelist.js"></script>
+    <script src="demo.js"></script>
 </body>
 </html>

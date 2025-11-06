@@ -1,0 +1,46 @@
+.view-journey-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    font-family: 'Caveat', cursive; /* Handwritten font */
+    text-align: center;
+}
+
+#journey-title {
+    font-size: 2.8rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+}
+
+.journey-image-container {
+    width: 100%;
+    max-width: 600px; /* Limit image width */
+    margin: 0 auto 2rem auto; /* Center image and add space below */
+    border-radius: 15px;
+    overflow: hidden; /* Ensure image stays within rounded corners */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#journey-image {
+    display: block; /* Remove extra space below image */
+    width: 100%;
+    height: auto;
+}
+
+#journey-story {
+    font-size: 1.6rem;
+    color: #555;
+    line-height: 1.8;
+    text-align: left; /* Left-align story text */
+    white-space: pre-wrap; /* Preserve line breaks from textarea */
+}
+
+.hidden {
+    display: none;
+}
+
+.back-arrow {
+    font-size: 2.5rem;
+    text-decoration: none;
+    color: #333;
+}
