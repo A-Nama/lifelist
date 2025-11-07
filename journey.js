@@ -1,7 +1,13 @@
-// journey.js - Complete and Working Version
+// journey.js (Complete Real Version - CORRECTED)
 document.addEventListener('DOMContentLoaded', async () => {
-    const API_URL = 'https://x9a2avtgph.execute-api.eu-north-1.amazonaws.com/prod';
+    
+    // 1. MAKE SURE THIS IS YOUR API GATEWAY URL
+    const API_URL = 'https://ec6s6x4r9i.execute-api.eu-north-1.amazonaws.com/prod'; 
+    const token = localStorage.getItem('idToken'); 
 
+    if (!token) window.location.href = 'index.html'; 
+
+    // --- Get HTML Elements ---
     const titleInput = document.getElementById('title-input');
     const storyInput = document.getElementById('story-input');
     const saveBtn = document.getElementById('save-journey-btn');
@@ -14,22 +20,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!goalId) {
         alert("No goal specified!");
-        window.location.href = 'demo.html';
+        window.location.href = 'my-lifelist.html'; 
         return;
     }
 
-    // --- 1. Fetch existing goal details when page loads ---
+    // --- This function fetches the goal details ---
     async function fetchGoalDetails() {
         try {
-            const response = await fetch(`${API_URL}/goalId/${goalId}`);
-            if (!response.ok) throw new Error("Goal not found.");
+            // --- 2. THIS IS THE CORRECTED URL ---
+            const response = await fetch(`${API_URL}/goals/${goalId}`, { 
+                headers: { 'Authorization': token }
+            });
+            
+            if (!response.ok) {
+                console.error("Fetch failed with status:", response.status);
+                throw new Error("Goal not found.");
+            }
             
             const goal = await response.json();
             
+            // This will now fill in your "go to italy" title
             titleInput.value = goal.title || '';
             storyInput.value = goal.description || '';
             
-            // If an image already exists, show it
             if (goal.imageUrl) {
                 imagePreview.src = goal.imageUrl;
                 imagePreview.classList.remove('hidden');
@@ -41,21 +54,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // --- 2. Show a preview of the new image when selected ---
+    // --- This handles the image preview ---
     imageInput.addEventListener('change', () => {
         const file = imageInput.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e) => {
-                imagePreview.src = e.target.result;
-                imagePreview.classList.remove('hidden');
-                imagePlaceholder.classList.add('hidden');
+            reader.onload = (e) => { 
+                imagePreview.src = e.target.result; 
+                imagePreview.classList.remove('hidden'); 
+                imagePlaceholder.classList.add('hidden'); 
             };
             reader.readAsDataURL(file);
         }
     });
 
-    // --- 3. Save the entire journey ---
+    // --- This saves your changes ---
     async function saveJourney() {
         const title = titleInput.value.trim();
         const story = storyInput.value.trim();
@@ -64,48 +77,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!title) return alert("Please add a title.");
         
         try {
-            let finalImageUrl;
+            let finalImageUrl = imagePreview.src; // Keep old image if no new one
 
-            // --- STEP A: Upload image if a new one was selected ---
             if (file) {
-                // 1. Get the "permission slip" (presigned URL) from our new Lambda
-                const uploadUrlResponse = await fetch(`${API_URL}/uploadurl?goalId=${goalId}`);
+                // --- 3. THIS IS THE CORRECTED URL ---
+                const uploadUrlResponse = await fetch(`${API_URL}/goals/${goalId}/upload-url`, { 
+                    headers: { 'Authorization': token }
+                });
+                if (!uploadUrlResponse.ok) throw new Error('Could not get upload URL from API.');
+                
                 const { uploadUrl, imageUrl } = await uploadUrlResponse.json();
                 
-                // 2. Upload the file directly to S3 with that URL
-                await fetch(`${API_URL}/goalId/${goalId}`, {
+                const s3UploadResponse = await fetch(uploadUrl, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ /* ... title, description, imageUrl ... */ })
+                    body: file,
+                    headers: { "Content-Type": file.type }
                 });
                 
+                if (!s3UploadResponse.ok) throw new Error('File upload to S3 failed.');
+                
                 finalImageUrl = imageUrl;
-            } else {
-                // No new file, just keep the old image URL (if any)
-                finalImageUrl = imagePreview.src;
             }
 
-            // --- STEP B: Save all data (title, story, and image URL) to DynamoDB ---
-            await fetch(`${API_URL}/goals/${goalId}`, {
+            // --- 4. THIS IS THE CORRECTED URL ---
+            await fetch(`${API_URL}/goals/${goalId}`, { 
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Authorization': token, 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     title: title,
-                    description: story, // 'description' is your story
-                    imageUrl: finalImageUrl // Save the link to the image
+                    description: story,
+                    imageUrl: finalImageUrl 
                 })
             });
 
             alert("Your journey has been saved!");
-            window.location.href = `view-journey.html?goalId=${goalId}`;
+            window.location.href = `view-journey.html?goalId=${goalId}`; 
         } catch (error) {
             console.error("Failed to save journey:", error);
-            alert("Could not save your story. Please try again.");
+            alert(`Could not save your story. Error: ${error.message}`);
         }
     }
 
     saveBtn.addEventListener('click', saveJourney);
     
-    // Load existing goal details when the page opens
+    // This runs when the page loads
     await fetchGoalDetails();
 });

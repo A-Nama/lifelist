@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- AWS SDK Configuration ---
     const cognitoRegion = 'eu-north-1';        
-    const userPoolId = 'eu-north-1_kNXLNvse2';
-    const userPoolWebClientId = '7p0i8he7og0btin4dq7hjt6gdg';
+    const userPoolId = 'eu-north-1_15V5xX4sK'; 
+    const userPoolWebClientId = '5k7nh6jc5gs7qcv3r6sm1dbsig';
 
     AWS.config.region = cognitoRegion;
     const cognito = new AWS.CognitoIdentityServiceProvider();

@@ -1,158 +1,118 @@
+// my-lifelist.js (Complete Real Version)
 document.addEventListener('DOMContentLoaded', async () => {
-    // --- CONFIGURATION ---
-    const API_URL = 'https://x9a2avtgph.execute-api.eu-north-1.amazonaws.com/prod'; 
-
+    const API_URL = 'https://ec6s6x4r9i.execute-api.eu-north-1.amazonaws.com/prod'; // Your API URL
     let goals = [];
-    let currentUser = {};
+    const token = localStorage.getItem('idToken'); // Get the token
 
     // --- DOM ELEMENTS ---
     const personalGoalList = document.getElementById('personal-goal-list');
     const addGoalBtn = document.getElementById('add-goal-btn');
     const newGoalTextInput = document.getElementById('new-goal-text');
+    const newGoalThemeSelect = document.getElementById('new-goal-theme');
     const usernameTitle = document.getElementById('username-title');
     const profileName = document.getElementById('profile-name');
-    const themeMenuToggle = document.getElementById('theme-menu-toggle');
-    const themeSubmenu = document.getElementById('theme-submenu');
-    const themeList = document.getElementById('theme-submenu');
-    const newGoalThemeSelect = document.getElementById('new-goal-theme');
-
-    if (themeMenuToggle) {
-        themeMenuToggle.addEventListener('click', (e) => {
-            // Prevent the main link from navigating
-            e.preventDefault(); 
-            // Stop the click from propagating to other elements
-            e.stopPropagation(); 
-
-            // Toggle the class on the parent li to rotate the arrow
-            themeMenuToggle.classList.toggle('submenu-open');
-            // Toggle the class on the submenu ul to trigger the animation
-            themeSubmenu.classList.toggle('open');
-        });
-    }
-
-    themeList.addEventListener('click', (e) => {
-    e.preventDefault(); 
-
-        if (e.target.matches('a.theme-link')) {
-            const selectedTheme = e.target.dataset.theme;
-
-            document.querySelectorAll('.theme-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            e.target.classList.add('active');
-
-            renderPersonalGoals(selectedTheme);
-        }
-    });
-
 
     async function initializePage() {
-        const token = localStorage.getItem('idToken');
         if (!token) {
-            window.location.href = 'index.html';
+            window.location.href = 'index.html'; // If no token, kick to login page
             return;
         }
 
         try {
-            // Decode the token to get user info without needing a separate API call
             const payload = JSON.parse(atob(token.split('.')[1]));
-            currentUser = { username: payload['cognito:username'], id: payload.sub };
-            usernameTitle.textContent = currentUser.username;
-            profileName.textContent = currentUser.username; // Use username as name for now
+            usernameTitle.textContent = payload.email; // Use email as username
+            profileName.textContent = payload.email;
+
             await fetchMyGoals();
+            renderPersonalGoals();
         } catch (error) {
-            console.error('Authentication error:', error);
-            localStorage.removeItem('idToken'); // Clean up bad token
+            console.error('Initialization error:', error);
+            localStorage.removeItem('idToken');
             window.location.href = 'index.html';
         }
     }
 
-
-   function renderPersonalGoals(filterTheme = 'all') {
-        personalGoalList.innerHTML = '';
-
-        const filteredGoals = goals.filter(goal => {
-            if (filterTheme === 'all') {
-                return true; // Show all goals
-            }
-            // This now correctly checks the 'theme' property of the goal object
-            return goal.theme === filterTheme;
-        });
-
-        if (filteredGoals.length > 0) {
-            filteredGoals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    async function fetchMyGoals() {
+        try {
+            const response = await fetch(`${API_URL}/goals`, {
+                headers: { 'Authorization': token } // Add token to header
+            });
+            if (!response.ok) throw new Error('Could not fetch goals.');
+            goals = await response.json();
+        } catch (error) {
+            console.error("Failed to fetch goals:", error);
+            personalGoalList.innerHTML = "<li>Could not load goals.</li>";
         }
-        filteredGoals.forEach(goal => {
+    }
+
+    function renderPersonalGoals() {
+        personalGoalList.innerHTML = '';
+        goals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        goals.forEach(goal => {
             const goalItem = document.createElement('div');
             goalItem.className = `goal-item ${goal.completed ? 'completed' : ''}`;
-            goalItem.innerHTML = `<input type="checkbox" data-goal-id="${goal.goalId}" ${goal.completed ? 'checked' : ''}><span>${goal.title}</span>`;
+            goalItem.dataset.goalId = goal.goalId;
+            // Link to the journey page
+            goalItem.innerHTML = `<a href="journey.html?goalId=${goal.goalId}">
+                                    <input type="checkbox" ${goal.completed ? 'checked' : ''}>
+                                    <span>${goal.title}</span>
+                                  </a>`;
             personalGoalList.appendChild(goalItem);
         });
     }
 
-    async function fetchMyGoals() {
-        const token = localStorage.getItem('idToken');
-        try {
-            const response = await fetch(`${API_URL}/goals`, {
-                headers: { 'Authorization': token }
-            });
-            if (!response.ok) throw new Error('Could not fetch goals.');
-            goals = await response.json();
-            renderPersonalGoals();
-        } catch (error) { 
-            console.error('Failed to fetch goals:', error);
-            // Optionally show an error message to the user on the page
-        }
-    }
-
-     async function createNewGoal() {
+    async function createNewGoal() {
         const title = newGoalTextInput.value.trim();
-        const theme = newGoalThemeSelect.value; // <-- Get selected theme
+        const theme = newGoalThemeSelect.value;
+        if (!title || !theme) return alert('Please write your goal and select a theme.');
 
-        if (!title || !theme) { // <-- Add validation for theme
-            alert('Please write your goal and select a theme.');
-            return;
-        }
-        const token = localStorage.getItem('idToken');
         try {
             const response = await fetch(`${API_URL}/goals`, {
                 method: 'POST',
                 headers: { 'Authorization': token, 'Content-Type': 'application/json' },
-                // --- THIS IS THE KEY CHANGE ---
-                // Add the 'theme' to the request body
-                body: JSON.stringify({ title: title, theme: theme, description: "" }) 
+                body: JSON.stringify({ title, theme, description: "" })
             });
             if (!response.ok) throw new Error('Could not create goal.');
-            
+
             const newGoal = await response.json();
             goals.push(newGoal);
-            renderPersonalGoals(); // Re-render the full list
+            renderPersonalGoals();
             newGoalTextInput.value = '';
-            newGoalThemeSelect.value = ''; // Reset the dropdown
+            newGoalThemeSelect.value = '';
         } catch (error) {
             console.error('Failed to create goal:', error);
-            alert('Could not save your goal. Please try again.');
+            alert('Could not save your goal.');
         }
     }
 
-    // --- EVENT LISTENERS ---
+    async function updateGoalStatus(goalId, isCompleted) {
+        try {
+            // Use the correct API Gateway path you defined
+            await fetch(`${API_URL}/goals/${goalId}`, {
+                method: 'PUT',
+                headers: { 'Authorization': token, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ completed: isCompleted })
+            });
+            const goalToUpdate = goals.find(g => g.goalId === goalId);
+            if(goalToUpdate) goalToUpdate.completed = isCompleted;
+        } catch (error) {
+            console.error('Failed to update goal:', error);
+            alert('Could not update your goal.');
+        }
+    }
+
     addGoalBtn.addEventListener('click', createNewGoal);
 
-    themeSubmenu.addEventListener('click', (e) => {
-        e.preventDefault(); 
-
-        if (e.target.matches('a.theme-link')) {
-            const selectedTheme = e.target.dataset.theme;
-
-            document.querySelectorAll('.theme-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            e.target.classList.add('active');
-
-            renderPersonalGoals(selectedTheme);
+    personalGoalList.addEventListener('click', (event) => {
+        if (event.target.type === 'checkbox') {
+            event.preventDefault();
+            const goalItem = event.target.closest('.goal-item');
+            const goalId = goalItem.dataset.goalId;
+            const isCompleted = event.target.checked;
+            goalItem.classList.toggle('completed', isCompleted);
+            updateGoalStatus(goalId, isCompleted);
         }
     });
 
-    // Initial page load
-    initializePage();
+    await initializePage();
 });
