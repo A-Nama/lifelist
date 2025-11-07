@@ -25,11 +25,15 @@
                 <input type="text" id="title-input" placeholder="Add Title">
                 
                 <div class="image-uploader" id="image-uploader-box">
-                    <img id="image-preview" src="" alt="Image preview" class="hidden">
-                    <div id="image-placeholder">
-                        <span class="camera-icon">📷</span>
-                        <input type="file" id="image-input" accept="image/jpeg, image/png">
+                    <!-- horizontal list of thumbnails -->
+                    <div id="image-list" class="image-list">
+                        <div id="image-placeholder" class="image-placeholder">
+                            <span class="camera-icon">📷</span>
+                        </div>
                     </div>
+
+                    <!-- file input allows multiple -->
+                    <input type="file" id="image-input" accept="image/jpeg, image/png" multiple>
                 </div>
 
                 <a href="#" id="save-journey-btn" class="save-arrow">→</a>

@@ -4,43 +4,205 @@
     padding: 1rem 2rem;
     font-family: 'Caveat', cursive; /* Handwritten font */
     text-align: center;
+    font-size: 18px; /* increased base font for the whole view */
+    background: url('https://i.imgur.com/Q2y8q41.png') no-repeat center center fixed; /* Paper texture background */
+    background-size: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
 }
 
-#journey-title {
+/* Header with "The Lifelist" logo and navigation arrows */
+.journey-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.nav-arrow {
+    font-size: 2.5rem;
+    color: #888;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+}
+
+.logo {
+    font-family: 'Dancing Script', cursive; /* A script font for the logo */
     font-size: 2.8rem;
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Avatar image in the top left */
+.avatar-container {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* slightly larger title */
+#journey-title {
+    font-size: 3.2rem; /* bumped up for readability */
     color: #444;
     margin-bottom: 1.5rem;
+    font-weight: bold;
 }
+
+/* --- Image Container & Shuffle Effect --- */
 
 .journey-image-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     width: 100%;
-    max-width: 600px; /* Limit image width */
-    margin: 0 auto 2rem auto; /* Center image and add space below */
-    border-radius: 15px;
-    overflow: hidden; /* Ensure image stays within rounded corners */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 760px;          /* allow larger image row */
+    margin: 0 auto 1.6rem;   /* tighten space below the images */
+    border-radius: 12px;
+    overflow: hidden;
+    /* box-shadow: 0 6px 18px rgba(0,0,0,0.08); <-- Removed this shadow */
+    padding: 0;              
+    box-sizing: border-box;
+    position: relative;
+    height: 300px; /* Set a fixed height for the container */
 }
 
-#journey-image {
-    display: block; /* Remove extra space below image */
+.image-list {
+    display: flex;
+    gap: 0; 
+    align-items: center;
+    justify-content: center;
+    overflow: visible; /* Allow images to overlap */
+    padding: 0;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
     width: 100%;
-    height: auto;
+    position: relative; 
+    height: 100%;
 }
 
+.view-thumb {
+    width: 180px;              /* larger portrait thumbnail */
+    height: 260px;             /* taller portrait ratio */
+    object-fit: cover;
+    border-radius: 10px;
+    flex: 0 0 auto;
+    /* border: 1px solid #eee; <-- Removed this border */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    position: absolute; /* Absolute positioning for overlapping */
+    transition: transform 0.4s ease-in-out, box-shadow 0.3s ease; 
+    cursor: pointer;
+}
+
+/* --- Image Stacking & Single Image Rules --- */
+
+/* Specific positioning for each image to create the stacked look */
+.view-thumb:nth-child(1) { /* Leftmost image */
+    transform: translateX(-120px) rotate(-10deg);
+    z-index: 1;
+}
+
+.view-thumb:nth-child(2) { /* Center image (active) */
+    transform: translateX(0) rotate(0deg) scale(1.1); /* Slightly larger */
+    z-index: 3; /* Bring to front */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.view-thumb:nth-child(3) { /* Rightmost image */
+    transform: translateX(120px) rotate(10deg);
+    z-index: 2;
+}
+
+
+.view-thumb:only-child {
+    transform: translateX(0) rotate(0deg) scale(1.1); /* Use the 'center' style */
+    z-index: 3;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+
+/* --- Hover & Active Effects --- */
+
+/* Hover effects to simulate shuffling */
+.image-list:hover .view-thumb:nth-child(1) {
+    transform: translateX(-150px) rotate(-15deg) scale(0.95);
+    z-index: 1;
+}
+
+.image-list:hover .view-thumb:nth-child(2) {
+    transform: translateX(0) rotate(0deg) scale(1.05); /* Stays prominent */
+    z-index: 3;
+}
+
+.image-list:hover .view-thumb:nth-child(3) {
+    transform: translateX(150px) rotate(15deg) scale(0.95);
+    z-index: 1;
+}
+
+/* Active image styling - ensure it's on top and slightly larger */
+.view-thumb.active {
+    border: 3px solid #6699ff; /* Highlight for the active image */
+    box-shadow: 0 5px 20px rgba(0,100,255,0.3);
+    transform: translateX(0) rotate(0deg) scale(1.15); /* More prominent */
+    z-index: 4; /* Even higher z-index */
+}
+
+
+/* --- Story Text & Responsive --- */
+
+/* Final story text styling */
 #journey-story {
-    font-size: 1.6rem;
+    font-size: 1.6rem;       /* reduced from 1.9rem */
     color: #555;
-    line-height: 1.8;
-    text-align: left; /* Left-align story text */
-    white-space: pre-wrap; /* Preserve line breaks from textarea */
+    line-height: 1.85;
+    text-align: left;
+    white-space: pre-wrap;
+    max-width: 720px;        /* align text width with image row */
+    margin: 1.2rem auto;
+    padding: 0 1rem; /* Add some horizontal padding */
 }
 
-.hidden {
-    display: none;
+/* responsive adjustments for narrow screens */
+@media (max-width: 600px) {
+    .view-thumb { width: 140px; height: 200px; }
+    
+    /* Adjust stacked image positions for smaller screens */
+    .view-thumb:nth-child(1) { transform: translateX(-90px) rotate(-10deg); }
+    .view-thumb:nth-child(2) { transform: translateX(0) rotate(0deg) scale(1.1); }
+    .view-thumb:nth-child(3) { transform: translateX(90px) rotate(10deg); }
+    .view-thumb:only-child { transform: translateX(0) rotate(0deg) scale(1.1); } /* Ensure single image is still centered */
+
+    .journey-image-container { max-width: 100%; padding: 0; height: 250px; }
+    #journey-story { font-size: 1.45rem; max-width: 92%; }
+    .avatar-container {
+        width: 60px;
+        height: 60px;
+        top: 0.8rem;
+        left: 0.8rem;
+    }
+    .journey-header {
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+    .logo { font-size: 2.2rem; margin-top: 1rem;}
+    .nav-arrow { font-size: 2rem; }
 }
 
-.back-arrow {
-    font-size: 2.5rem;
-    text-decoration: none;
-    color: #333;
-}

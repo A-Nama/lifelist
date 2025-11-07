@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>My Journey</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="view-journey.css">
@@ -18,9 +18,14 @@
 
     <main class="view-journey-container">
         <h2 id="journey-title">Loading...</h2>
+
+        <!-- changed: list container for multiple images -->
         <div class="journey-image-container">
-            <img id="journey-image" src="" alt="Journey image" class="hidden">
+            <div id="image-list" class="image-list">
+                <!-- JS will inject <img class="view-thumb"> elements here -->
+            </div>
         </div>
+
         <p id="journey-story">Loading story...</p>
     </main>
 

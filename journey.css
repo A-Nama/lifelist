@@ -1,3 +1,38 @@
+body {
+    margin: 0;
+    font-family: 'Cabin', sans-serif;
+    color: #333;
+    background-color: #f8f6f2;
+    background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: #fefdfb;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #eee;
+}
+
+.nav-arrow {
+    font-size: 2rem;
+    color: #555;
+    cursor: pointer;
+    text-decoration: none;
+}
+.profile-pic-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #ddd;
+    cursor: pointer;
+}
+
+/* --- Journey Page Specific Styles --- */
 .journey-container {
     max-width: 900px;
     margin: 2rem auto;
@@ -34,7 +69,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    width: 280px;
+    width: 260px;
 }
 
 #title-input {
@@ -49,30 +84,75 @@
     box-sizing: border-box; /* Important for padding */
 }
 
+/* Compact image uploader */
 .image-uploader {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
+    width: 240px;
+    height: 120px;
+    border-radius: 12px;
     background-color: #f0f0f0;
     position: relative;
     display: flex;
-    justify-content: center;
     align-items: center;
     overflow: hidden;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    padding: 8px;
+    box-sizing: border-box;
 }
 
-.camera-icon {
-    font-size: 5rem;
-    color: #aaa;
+/* horizontal list container */
+.image-list {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    width: 100%;
 }
 
-#image-placeholder {
+/* placeholder shown when no images */
+.image-placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 72px;
+    min-height: 72px;
+    border-radius: 12px;
+    background: transparent;
+    color: #aaa;
 }
 
+/* thumbnail items */
+.thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    object-fit: cover;
+    flex: 0 0 auto;
+    border: 2px solid #eee;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    cursor: pointer;
+    position: relative;
+}
+
+/* small remove "x" on top-right of thumbnail (optional) */
+.thumb-remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #666;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    cursor: pointer;
+}
+
+/* file input (invisible) */
 #image-input {
     position: absolute;
     top: 0;
@@ -83,10 +163,9 @@
     cursor: pointer;
 }
 
+/* hide original single preview */
 #image-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: none;
 }
 
 .hidden {
@@ -94,9 +173,19 @@
 }
 
 .save-arrow {
+    display: block; /* Make it a block element to respect text-align */
     font-size: 3rem;
     text-decoration: none;
     color: #555;
     text-align: right;
     margin-top: 1rem;
+}
+
+/* optional scrollbar styling for nicer look */
+.image-list::-webkit-scrollbar {
+    height: 8px;
+}
+.image-list::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.08);
+    border-radius: 4px;
 }
